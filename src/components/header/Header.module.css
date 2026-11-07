@@ -1,0 +1,118 @@
+.header {
+  position: relative;
+  z-index: 5;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 26px var(--pad);
+  gap: 28px;
+}
+
+.logo {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1.18;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+.phone,
+.discuss,
+.menuButton {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.18;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.phone {
+  font-size: 14px;
+}
+
+.discuss {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menuButton {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 22px var(--pad) 40px;
+  background: var(--cream);
+}
+
+.panelBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panelNav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-size: clamp(28px, 8vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.panelPhone {
+  margin-top: auto;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+@media (max-width: 1100px) {
+  .nav {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .bar {
+    padding-block: 22px;
+  }
+
+  .logo {
+    font-size: 30px;
+  }
+
+  .phone,
+  .discuss {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+
+  .panel .menuButton {
+    margin-left: 0;
+  }
+}
