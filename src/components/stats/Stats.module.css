@@ -1,0 +1,34 @@
+.stats {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 0;
+  padding: 32px var(--pad);
+  list-style: none;
+}
+
+.value {
+  font-size: clamp(19px, 2.3vw, 32px);
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+.label {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: clamp(9px, 0.9vw, 12px);
+  line-height: 1.18;
+}
+
+@media (max-width: 720px) {
+  .list {
+    gap: 12px;
+    padding-block: 24px;
+  }
+}
