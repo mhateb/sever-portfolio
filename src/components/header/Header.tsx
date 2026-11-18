@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { mainNav, phone } from "@/content/site";
 import styles from "./Header.module.css";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) {
       return;
     }
+
+    closeRef.current?.focus();
 
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -70,7 +73,12 @@ export function Header() {
             <a className={styles.logo} href="#top" onClick={close}>
               север/
             </a>
-            <button className={styles.menuButton} type="button" onClick={close}>
+            <button
+              ref={closeRef}
+              className={styles.menuButton}
+              type="button"
+              onClick={close}
+            >
               Закрыть
             </button>
           </div>
