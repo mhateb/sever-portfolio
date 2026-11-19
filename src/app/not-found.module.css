@@ -1,0 +1,43 @@
+.page {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 96px var(--pad) 140px;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+
+.title {
+  margin-top: 18px;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.text {
+  max-width: 36ch;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
