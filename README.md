@@ -4,7 +4,11 @@
 
 Заявка не уходит на сервер: форма проверяет имя и телефон в браузере и показывает подтверждение.
 
+Сайт опубликован на [GitHub Pages](https://mhateb.github.io/sever-portfolio/).
+
 ## Макет
+
+[Макет лендинга в Figma](https://www.figma.com/design/1LD3PgeyAMLDaZO9od5nzt/Untitled?node-id=4-5&m=dev)
 
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/1LD3PgeyAMLDaZO9od5nzt/Untitled?node-id=4-5&m=dev&embed-host=share" allowfullscreen></iframe>
 
@@ -30,40 +34,39 @@ npm run lint
 
 ## Скорость
 
-Оценки ниже сняты [Lighthouse](https://developer.chrome.com/docs/lighthouse/) 13.6 с продакшен-сборки (`npm run build && npm run start`), 20 ноября 2026. PageSpeed Insights использует тот же движок, но запускает его со своих серверов по публичному адресу и, если сайт уже живой, добавляет полевые данные Chrome. Пока домена нет, официальный отчёт PageSpeed снять нельзя. `npm run dev` для замера не подходит: там другие бандлы и нет оптимизаций продакшена.
+Оценки ниже сняты [Lighthouse](https://developer.chrome.com/docs/lighthouse/) 13.6 с опубликованного сайта [mhateb.github.io/sever-portfolio](https://mhateb.github.io/sever-portfolio/), 20 ноября 2026. Замер шёл с локальной машины. На телефоне включено стандартное замедление Lighthouse, поэтому цифры ниже, чем на десктопе. `npm run dev` для такого замера не подходит: там другие бандлы и нет оптимизаций продакшена. Локальный `npm run start` тоже даст другие числа: там Next сжимает картинки, а GitHub Pages отдаёт их как есть.
 
-Повторить локально:
+Повторить по живому адресу:
 
 ```bash
-npm run build && npm run start
-npx lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-mobile.html
-npx lighthouse http://localhost:3000 --preset=desktop --output=html --output-path=./lighthouse-desktop.html
+npx lighthouse https://mhateb.github.io/sever-portfolio/ --output=html --output-path=./lighthouse-mobile.html
+npx lighthouse https://mhateb.github.io/sever-portfolio/ --preset=desktop --output=html --output-path=./lighthouse-desktop.html
 ```
 
-Зелёная зона категории — от 90. На телефоне включено стандартное замедление Lighthouse, поэтому цифры ниже, чем на десктопе.
+Зелёная зона категории — от 90.
 
 ### Телефон
 
-![Производительность 91](https://img.shields.io/badge/Performance-91-0cce6b?style=flat-square)
+![Производительность 89](https://img.shields.io/badge/Performance-89-ffa400?style=flat-square)
 ![Доступность 96](https://img.shields.io/badge/Accessibility-96-0cce6b?style=flat-square)
 ![Лучшие практики 100](https://img.shields.io/badge/Best_Practices-100-0cce6b?style=flat-square)
 ![SEO 100](https://img.shields.io/badge/SEO-100-0cce6b?style=flat-square)
 
 ### Десктоп
 
-![Производительность 99](https://img.shields.io/badge/Performance-99-0cce6b?style=flat-square)
+![Производительность 100](https://img.shields.io/badge/Performance-100-0cce6b?style=flat-square)
 ![Доступность 96](https://img.shields.io/badge/Accessibility-96-0cce6b?style=flat-square)
 ![Лучшие практики 100](https://img.shields.io/badge/Best_Practices-100-0cce6b?style=flat-square)
 ![SEO 100](https://img.shields.io/badge/SEO-100-0cce6b?style=flat-square)
 
 | | Телефон | Десктоп | Хорошо, если |
 |---|---:|---:|---:|
-| Первая отрисовка | 0,9 с | 0,2 с | до 1,8 с |
-| Крупнейшая отрисовка | 3,5 с | 0,9 с | до 2,5 с |
-| Блокировка потока | 7 мс | 0 мс | до 200 мс |
+| Первая отрисовка | 1,1 с | 0,4 с | до 1,8 с |
+| Крупнейшая отрисовка | 3,8 с | 0,8 с | до 2,5 с |
+| Блокировка потока | 50 мс | 0 мс | до 200 мс |
 | Сдвиг вёрстки | 0 | 0 | до 0,1 |
 
-Крупнейшая отрисовка на телефоне в жёлтой зоне. Остальные виталы и все четыре категории зелёные.
+На телефоне производительность 89 и крупнейшая отрисовка 3,8 с в жёлтой зоне. Доступность, лучшие практики, SEO и остальные виталы зелёные. На десктопе зелёные все четыре категории и все виталы.
 
 ## Структура
 
