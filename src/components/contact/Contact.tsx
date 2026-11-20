@@ -1,7 +1,14 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { HOUSE_SELECT_EVENT, type SelectedSize } from "@/lib/house-selection";
+import { maskPhone, nationalDigits } from "@/lib/phone";
 import styles from "./Contact.module.css";
 
 const sizes: { id: SelectedSize; label: string }[] = [
@@ -11,12 +18,44 @@ const sizes: { id: SelectedSize; label: string }[] = [
   { id: "unknown", label: "Не знаю" },
 ];
 
+function nameError(value: string) {
+  const cleaned = value.trim().replace(/\s+/g, " ");
+  const letters = cleaned.match(/\p{L}/gu) ?? [];
+  if (letters.length < 2) return "Напишите, как к вам обращаться";
+  if (!/^[\p{L}][\p{L}\s.'’-]*$/u.test(cleaned)) {
+    return "Оставьте в имени только буквы";
+  }
+  return undefined;
+}
+
+function phoneError(value: string) {
+  const digits = nationalDigits(value);
+  if (!digits) return "Нужен телефон, чтобы прислать расчёт";
+  if (digits.length < 10) return "Введите телефон полностью";
+  return undefined;
+}
+
 export function Contact() {
   const [size, setSize] = useState<SelectedSize>("80");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [touched, setTouched] = useState<{ name: boolean; phone: boolean }>({
+    name: false,
+    phone: false,
+  });
   const [sent, setSent] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const caretRef = useRef<number | null>(null);
+
+  useLayoutEffect(() => {
+    const input = phoneRef.current;
+    const caret = caretRef.current;
+    if (!input || caret == null || document.activeElement !== input) return;
+    input.setSelectionRange(caret, caret);
+    caretRef.current = null;
+  }, [phone]);
 
   useEffect(() => {
     const onSelect = (event: Event) => {
@@ -29,20 +68,29 @@ export function Contact() {
     return () => window.removeEventListener(HOUSE_SELECT_EVENT, onSelect);
   }, []);
 
+  const nameMessage = nameError(name);
+  const phoneMessage = phoneError(phone);
+  const showName = (submitted || touched.name) && nameMessage;
+  const showPhone = (submitted || touched.phone) && phoneMessage;
+
+  const onPhoneChange = (value: string, cursor: number) => {
+    const next = maskPhone(value, phone, cursor);
+    caretRef.current = next.caret;
+    setPhone(next.value);
+  };
+
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nextErrors: { name?: string; phone?: string } = {};
-    if (name.trim().length < 2) {
-      nextErrors.name = "Напишите, как к вам обращаться";
+    setSubmitted(true);
+    if (nameMessage) {
+      nameRef.current?.focus();
+      return;
     }
-    const digits = phone.replace(/\D/g, "");
-    if (digits.length < 10) {
-      nextErrors.phone = "Нужен телефон, чтобы прислать расчёт";
+    if (phoneMessage) {
+      phoneRef.current?.focus();
+      return;
     }
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length === 0) {
-      setSent(true);
-    }
+    setSent(true);
   };
 
   return (
@@ -74,7 +122,10 @@ export function Contact() {
             <button
               className={styles.again}
               type="button"
-              onClick={() => setSent(false)}
+              onClick={() => {
+                setSent(false);
+                setSubmitted(false);
+              }}
             >
               Отправить другую заявку
             </button>
@@ -101,31 +152,51 @@ export function Contact() {
               </div>
             </fieldset>
 
-            <label className={styles.field}>
+            <label className={showName ? styles.fieldInvalid : styles.field}>
               <span className="visually-hidden">Ваше имя</span>
               <input
+                ref={nameRef}
                 name="name"
                 autoComplete="name"
                 placeholder="Ваше имя"
                 value={name}
-                aria-invalid={Boolean(errors.name)}
+                aria-invalid={Boolean(showName)}
+                aria-describedby={showName ? "name-error" : undefined}
+                onBlur={() => setTouched((current) => ({ ...current, name: true }))}
                 onChange={(event) => setName(event.target.value)}
               />
-              {errors.name ? <span className={styles.error}>{errors.name}</span> : null}
+              {showName ? (
+                <span className={styles.error} id="name-error" role="alert">
+                  {nameMessage}
+                </span>
+              ) : null}
             </label>
 
-            <label className={styles.field}>
+            <label className={showPhone ? styles.fieldInvalid : styles.field}>
               <span className="visually-hidden">Телефон</span>
               <input
+                ref={phoneRef}
                 name="phone"
                 type="tel"
+                inputMode="tel"
                 autoComplete="tel"
-                placeholder="Телефон +7 (___) ___-__-__"
+                placeholder="+7 (___) ___-__-__"
                 value={phone}
-                aria-invalid={Boolean(errors.phone)}
-                onChange={(event) => setPhone(event.target.value)}
+                aria-invalid={Boolean(showPhone)}
+                aria-describedby={showPhone ? "phone-error" : undefined}
+                onBlur={() => setTouched((current) => ({ ...current, phone: true }))}
+                onChange={(event) =>
+                  onPhoneChange(
+                    event.target.value,
+                    event.target.selectionStart ?? event.target.value.length,
+                  )
+                }
               />
-              {errors.phone ? <span className={styles.error}>{errors.phone}</span> : null}
+              {showPhone ? (
+                <span className={styles.error} id="phone-error" role="alert">
+                  {phoneMessage}
+                </span>
+              ) : null}
             </label>
 
             <button className={styles.submit} type="submit">
