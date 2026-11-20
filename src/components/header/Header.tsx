@@ -34,7 +34,7 @@ export function Header() {
   return (
     <header className={styles.header} id="top">
       <div className={styles.bar}>
-        <a className={styles.logo} href="#top">
+        <a className={styles.logo} href="/#top">
           север/
         </a>
 
@@ -50,7 +50,7 @@ export function Header() {
           {phone.display}
         </a>
 
-        <a className={styles.discuss} href="#contact">
+        <a className={styles.discuss} href="/#contact">
           Обсудить проект
           <span aria-hidden="true">↗</span>
         </a>
@@ -70,7 +70,7 @@ export function Header() {
       {open ? (
         <div className={styles.panel} id="site-menu" role="dialog" aria-modal="true" aria-label="Меню">
           <div className={styles.panelBar}>
-            <a className={styles.logo} href="#top" onClick={close}>
+            <a className={styles.logo} href="/#top" onClick={close}>
               север/
             </a>
             <button
@@ -88,7 +88,7 @@ export function Header() {
                 {item.label}
               </a>
             ))}
-            <a href="#contact" onClick={close}>
+            <a href="/#contact" onClick={close}>
               Обсудить проект
             </a>
           </nav>
