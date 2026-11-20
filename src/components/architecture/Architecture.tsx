@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { assetSrc } from "@/lib/asset-src";
 
 export function Architecture() {
   return (
@@ -28,7 +29,7 @@ export function Architecture() {
           <div className="relative min-h-[350px] overflow-hidden stack:min-h-[420px] wide:min-h-[530px]">
             <Image
               className="object-cover"
-              src="/images/interior.png"
+              src={assetSrc("/images/interior.png")}
               alt="Гостиная дома Север: светлое дерево, мягкий диван и панорамное окно в лес"
               fill
               sizes="(max-width: 900px) 100vw, 760px"
@@ -45,7 +46,7 @@ export function Architecture() {
               </p>
               <Image
                 className="h-auto w-[359px] max-w-full"
-                src="/images/floorplan.svg"
+                src={assetSrc("/images/floorplan.svg")}
                 width={359}
                 height={157}
                 unoptimized

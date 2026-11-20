@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { email, footerSections, footerSocial, phone } from "@/content/site";
 
 const focus = "focus-lime";
@@ -21,24 +22,29 @@ export function Footer() {
           <div className="flex gap-8 phone:gap-[60px]">
             <nav className="flex flex-col gap-3 text-[12px] leading-[1.3]" aria-label="Разделы">
               {footerSections.map((item) => (
-                <a key={item.href} className={focus} href={item.href}>
+                <Link key={item.href} className={focus} href={item.href}>
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
             <nav className="flex flex-col gap-3 text-[12px] leading-[1.3]" aria-label="Ещё">
-              {footerSocial.map((item) => (
-                <a
-                  key={item.label}
-                  className={focus}
-                  href={item.href}
-                  {...(item.external
-                    ? { target: "_blank", rel: "noreferrer" }
-                    : {})}
-                >
-                  {item.label} <span aria-hidden="true">↗</span>
-                </a>
-              ))}
+              {footerSocial.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.label}
+                    className={focus}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {item.label} <span aria-hidden="true">↗</span>
+                  </a>
+                ) : (
+                  <Link key={item.label} className={focus} href={item.href}>
+                    {item.label} <span aria-hidden="true">↗</span>
+                  </Link>
+                ),
+              )}
             </nav>
           </div>
         </div>
@@ -49,9 +55,9 @@ export function Footer() {
 
         <div className="mt-3 flex flex-col items-start gap-4 border-t border-footer-line pt-5 text-[9px] leading-[1.3] text-sage phone:flex-row phone:justify-between">
           <p>© север, 2026 · Концепция бренда</p>
-          <a className={focus} href="/privacy">
+          <Link className={focus} href="/privacy">
             Политика конфиденциальности
-          </a>
+          </Link>
           <p>Дома, в которых хочется жить.</p>
         </div>
       </div>

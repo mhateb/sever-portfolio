@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/button/Button";
+import { assetSrc } from "@/lib/asset-src";
 
 export function Hero() {
   return (
@@ -30,7 +31,7 @@ export function Hero() {
       <div className="relative flex h-[clamp(420px,41vw,590px)] flex-col justify-between overflow-hidden px-pad py-6 text-paper mid:py-8">
         <Image
           className="object-cover"
-          src="/images/hero.png"
+          src={assetSrc("/images/hero.png")}
           alt="Модульный дом Север 80 с панорамными окнами среди сосен"
           fill
           priority

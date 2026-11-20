@@ -45,9 +45,9 @@ export function Header() {
 
         <nav className="hidden gap-7 text-[13px] leading-[1.18] font-medium nav:flex" aria-label="Разделы">
           {mainNav.map((item) => (
-            <a key={item.href} href={item.href}>
+            <Link key={item.href} href={item.href}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -90,9 +90,9 @@ export function Header() {
           </div>
           <nav className="flex flex-col gap-[18px] text-menu font-medium tracking-snug" aria-label="Разделы">
             {mainNav.map((item) => (
-              <a key={item.href} href={item.href} onClick={close}>
+              <Link key={item.href} href={item.href} onClick={close}>
                 {item.label}
-              </a>
+              </Link>
             ))}
             <Link href="/#contact" onClick={close}>
               Обсудить проект

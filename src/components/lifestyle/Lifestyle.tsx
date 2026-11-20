@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { assetSrc } from "@/lib/asset-src";
 
 export function Lifestyle() {
   return (
     <section className="relative min-h-[650px] overflow-hidden text-paper phone:min-h-[620px]" id="showroom" aria-labelledby="showroom-title">
       <Image
         className="object-cover"
-        src="/images/lifestyle.png"
+        src={assetSrc("/images/lifestyle.png")}
         alt="Терраса дома: деревянное кресло, плед и утренний кофе в сосновом лесу"
         fill
         sizes="100vw"

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   FormEvent,
   useEffect,
@@ -238,9 +239,9 @@ export function Contact() {
             </button>
             <p className="text-[10px] leading-[1.3] text-moss">
               Нажимая кнопку, вы соглашаетесь с{" "}
-              <a className="underline underline-offset-2" href="/privacy">
+              <Link className="underline underline-offset-2" href="/privacy">
                 политикой конфиденциальности
-              </a>{" "}
+              </Link>{" "}
               и обработкой персональных данных.
             </p>
           </form>

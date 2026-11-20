@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import type { House } from "@/content/houses";
+import { assetSrc } from "@/lib/asset-src";
 import { requestHouse } from "@/lib/house-selection";
 
 export function HouseCard({ house }: { house: House }) {
@@ -10,7 +11,7 @@ export function HouseCard({ house }: { house: House }) {
       <div className="relative h-[clamp(230px,24vw,340px)] overflow-hidden">
         <Image
           className="object-cover"
-          src={house.image}
+          src={assetSrc(house.image)}
           alt={house.imageAlt}
           fill
           sizes="(max-width: 760px) 100vw, 33vw"
