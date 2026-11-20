@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import styles from "./privacy.module.css";
 
 export const metadata: Metadata = {
   title: "Политика конфиденциальности",
@@ -9,11 +8,13 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className={styles.page}>
-      <p className={styles.eyebrow}>Документ</p>
-      <h1 className={styles.title}>Политика конфиденциальности</h1>
-      <div className={styles.copy}>
-        <p>
+    <main className="mx-auto w-full max-w-page px-pad pt-[72px] pb-[120px]">
+      <p className="text-index font-medium tracking-index text-muted">Документ</p>
+      <h1 className="mt-[18px] max-w-[16ch] text-page font-medium tracking-title">
+        Политика конфиденциальности
+      </h1>
+      <div className="mt-9 grid max-w-[62ch] gap-[18px] text-[16px] leading-[1.45] text-muted">
+        <p className="text-ink">
           Форма на сайте нужна, чтобы подобрать дом и прислать каталог с
           расчётом. Мы спрашиваем имя, телефон и ориентир по площади.
         </p>

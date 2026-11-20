@@ -8,8 +8,8 @@ import {
   useState,
 } from "react";
 import { HOUSE_SELECT_EVENT, type SelectedSize } from "@/lib/house-selection";
+import { cx } from "@/lib/cx";
 import { maskPhone, nationalDigits } from "@/lib/phone";
-import styles from "./Contact.module.css";
 
 const sizes: { id: SelectedSize; label: string }[] = [
   { id: "45", label: "45 м²" },
@@ -17,6 +17,9 @@ const sizes: { id: SelectedSize; label: string }[] = [
   { id: "120", label: "120 м²" },
   { id: "unknown", label: "Не знаю" },
 ];
+
+const inputClass =
+  "w-full border-0 border-b bg-transparent px-0 pt-[17px] pb-4 text-base leading-[1.3] caret-ink shadow-[inset_0_-1px_0_transparent] transition-[border-color,box-shadow] duration-200 selection:bg-ink selection:text-lime focus:border-b-transparent focus:shadow-[inset_0_-2px_0_var(--color-ink)] focus:outline-none";
 
 function nameError(value: string) {
   const cleaned = value.trim().replace(/\s+/g, " ");
@@ -94,33 +97,39 @@ export function Contact() {
   };
 
   return (
-    <section className={styles.section} id="contact" aria-labelledby="contact-title">
-      <div className={styles.inner}>
-        <div className={styles.copy}>
-          <p className={styles.index}>07 / Ваш дом начинается здесь</p>
-          <h2 className={styles.title} id="contact-title">
+    <section className="scroll-mt-3 bg-lime" id="contact" aria-labelledby="contact-title">
+      <div className="mx-auto grid w-full max-w-page grid-cols-1 items-start gap-10 px-pad py-14 wide:grid-cols-[minmax(0,1fr)_minmax(280px,500px)] wide:gap-[70px] wide:py-20">
+        <div>
+          <p className="text-index font-medium tracking-index text-moss uppercase">
+            07 / Ваш дом начинается здесь
+          </p>
+          <h2 className="mt-7 text-statement font-medium tracking-display" id="contact-title">
             А что, если
             <br />
             уже этим летом?
           </h2>
-          <p className={styles.lead}>
+          <p className="mt-7 text-[16px] leading-[1.3] text-moss [&_br]:hidden wide:[&_br]:inline">
             Расскажите о своей мечте. Мы подберём дом,
             <br />
             рассчитаем стоимость и пришлём подробный каталог.
           </p>
-          <p className={styles.note}>Без навязчивых звонков. По-человечески.</p>
+          <p className="mt-7 text-[11px] leading-[1.3] text-moss">
+            Без навязчивых звонков. По-человечески.
+          </p>
         </div>
 
         {sent ? (
-          <div className={styles.success} role="status">
-            <p className={styles.successTitle}>Спасибо, {name.trim()}.</p>
+          <div className="flex min-h-[280px] flex-col justify-end gap-4 text-[16px] leading-[1.35]" role="status">
+            <p className="text-[2rem] leading-[1.1] font-medium tracking-snug">
+              Спасибо, {name.trim()}.
+            </p>
             <p>
               {`Напишем по номеру ${phone.trim()} и пришлём каталог с расчётом${
                 size === "unknown" ? "" : ` для дома ${size} м²`
               }.`}
             </p>
             <button
-              className={styles.again}
+              className="mt-2 self-start border-0 border-b border-ink bg-transparent p-0 text-sm font-medium focus-ink"
               type="button"
               onClick={() => {
                 setSent(false);
@@ -131,16 +140,23 @@ export function Contact() {
             </button>
           </div>
         ) : (
-          <form className={styles.form} onSubmit={onSubmit} noValidate>
-            <fieldset className={styles.fieldset}>
-              <legend>Какой дом вам ближе?</legend>
-              <div className={styles.chips}>
+          <form className="flex flex-col gap-[22px]" onSubmit={onSubmit} noValidate>
+            <fieldset className="m-0 border-0 p-0">
+              <legend className="mb-[22px] text-[15px] leading-[1.3] font-medium">
+                Какой дом вам ближе?
+              </legend>
+              <div className="flex flex-wrap gap-2">
                 {sizes.map((item) => {
                   const active = size === item.id;
                   return (
                     <button
                       key={item.id}
-                      className={active ? styles.chipActive : styles.chip}
+                      className={cx(
+                        "border px-4 py-2.5 text-[12px] leading-[1.3] font-medium transition-colors duration-200 focus-ink",
+                        active
+                          ? "border-ink bg-ink text-cream hover:bg-ink"
+                          : "border-form bg-transparent hover:border-ink hover:bg-ink/8",
+                      )}
                       type="button"
                       aria-pressed={active}
                       onClick={() => setSize(item.id)}
@@ -152,10 +168,16 @@ export function Contact() {
               </div>
             </fieldset>
 
-            <label className={showName ? styles.fieldInvalid : styles.field}>
-              <span className="visually-hidden">Ваше имя</span>
+            <label className="flex flex-col">
+              <span className="sr-only">Ваше имя</span>
               <input
                 ref={nameRef}
+                className={cx(
+                  inputClass,
+                  showName
+                    ? "border-transparent shadow-[inset_0_-2px_0_var(--color-alert)] placeholder:text-alert focus:shadow-[inset_0_-2px_0_var(--color-alert)]"
+                    : "border-form placeholder:text-moss",
+                )}
                 name="name"
                 autoComplete="name"
                 placeholder="Ваше имя"
@@ -166,16 +188,22 @@ export function Contact() {
                 onChange={(event) => setName(event.target.value)}
               />
               {showName ? (
-                <span className={styles.error} id="name-error" role="alert">
+                <span className="pt-2 text-[12px] leading-[1.35] text-alert" id="name-error" role="alert">
                   {nameMessage}
                 </span>
               ) : null}
             </label>
 
-            <label className={showPhone ? styles.fieldInvalid : styles.field}>
-              <span className="visually-hidden">Телефон</span>
+            <label className="flex flex-col">
+              <span className="sr-only">Телефон</span>
               <input
                 ref={phoneRef}
+                className={cx(
+                  inputClass,
+                  showPhone
+                    ? "border-transparent shadow-[inset_0_-2px_0_var(--color-alert)] placeholder:text-alert focus:shadow-[inset_0_-2px_0_var(--color-alert)]"
+                    : "border-form placeholder:text-moss",
+                )}
                 name="phone"
                 type="tel"
                 inputMode="tel"
@@ -193,22 +221,27 @@ export function Contact() {
                 }
               />
               {showPhone ? (
-                <span className={styles.error} id="phone-error" role="alert">
+                <span className="pt-2 text-[12px] leading-[1.35] text-alert" id="phone-error" role="alert">
                   {phoneMessage}
                 </span>
               ) : null}
             </label>
 
-            <button className={styles.submit} type="submit">
+            <button
+              className="mt-1 flex w-full items-center justify-between border-0 bg-ink px-[22px] py-5 text-[15px] leading-[1.3] font-medium text-cream focus-ink"
+              type="submit"
+            >
               <span>Получить каталог и расчёт</span>
-              <span className={styles.submitArrow} aria-hidden="true">
+              <span className="text-[21px] font-normal text-lime" aria-hidden="true">
                 ↗
               </span>
             </button>
-            <p className={styles.legal}>
+            <p className="text-[10px] leading-[1.3] text-moss">
               Нажимая кнопку, вы соглашаетесь с{" "}
-              <a href="/privacy">политикой конфиденциальности</a> и обработкой
-              персональных данных.
+              <a className="underline underline-offset-2" href="/privacy">
+                политикой конфиденциальности
+              </a>{" "}
+              и обработкой персональных данных.
             </p>
           </form>
         )}

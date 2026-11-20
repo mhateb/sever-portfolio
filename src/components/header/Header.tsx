@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { mainNav, phone } from "@/content/site";
-import styles from "./Header.module.css";
+
+const logoClass =
+  "text-[1.875rem] leading-[1.18] font-bold tracking-display phone:text-logo";
+const menuButtonClass =
+  "inline-flex items-center gap-2 border-0 bg-transparent p-0 text-[13px] leading-[1.18] font-medium";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -32,13 +37,13 @@ export function Header() {
   const close = () => setOpen(false);
 
   return (
-    <header className={styles.header} id="top">
-      <div className={styles.bar}>
-        <a className={styles.logo} href="/#top">
+    <header className="relative z-10" id="top">
+      <div className="mx-auto flex w-full max-w-page items-center justify-between gap-7 px-pad py-[22px] phone:py-[26px]">
+        <Link className={logoClass} href="/#top">
           север/
-        </a>
+        </Link>
 
-        <nav className={styles.nav} aria-label="Разделы">
+        <nav className="hidden gap-7 text-[13px] leading-[1.18] font-medium nav:flex" aria-label="Разделы">
           {mainNav.map((item) => (
             <a key={item.href} href={item.href}>
               {item.label}
@@ -46,17 +51,17 @@ export function Header() {
           ))}
         </nav>
 
-        <a className={styles.phone} href={phone.href}>
+        <a className="hidden text-[14px] leading-[1.18] font-medium phone:inline" href={phone.href}>
           {phone.display}
         </a>
 
-        <a className={styles.discuss} href="/#contact">
+        <Link className="hidden items-center gap-2 text-[13px] leading-[1.18] font-medium phone:inline-flex" href="/#contact">
           Обсудить проект
           <span aria-hidden="true">↗</span>
-        </a>
+        </Link>
 
         <button
-          className={styles.menuButton}
+          className={`${menuButtonClass} phone:hidden`}
           type="button"
           aria-expanded={open}
           aria-controls="site-menu"
@@ -68,31 +73,32 @@ export function Header() {
       </div>
 
       {open ? (
-        <div className={styles.panel} id="site-menu" role="dialog" aria-modal="true" aria-label="Меню">
-          <div className={styles.panelBar}>
-            <a className={styles.logo} href="/#top" onClick={close}>
+        <div
+          className="fixed inset-0 z-50 flex flex-col gap-9 bg-cream px-pad pt-[22px] pb-10"
+          id="site-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Меню"
+        >
+          <div className="flex items-center justify-between">
+            <Link className={logoClass} href="/#top" onClick={close}>
               север/
-            </a>
-            <button
-              ref={closeRef}
-              className={styles.menuButton}
-              type="button"
-              onClick={close}
-            >
+            </Link>
+            <button ref={closeRef} className={menuButtonClass} type="button" onClick={close}>
               Закрыть
             </button>
           </div>
-          <nav className={styles.panelNav} aria-label="Разделы">
+          <nav className="flex flex-col gap-[18px] text-menu font-medium tracking-snug" aria-label="Разделы">
             {mainNav.map((item) => (
               <a key={item.href} href={item.href} onClick={close}>
                 {item.label}
               </a>
             ))}
-            <a href="/#contact" onClick={close}>
+            <Link href="/#contact" onClick={close}>
               Обсудить проект
-            </a>
+            </Link>
           </nav>
-          <a className={styles.panelPhone} href={phone.href}>
+          <a className="mt-auto text-[18px] font-medium" href={phone.href}>
             {phone.display}
           </a>
         </div>
