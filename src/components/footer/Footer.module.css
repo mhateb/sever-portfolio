@@ -1,12 +1,14 @@
 .footer {
   background: var(--ink);
   color: var(--cream);
+  /* Строка логотипа уже самих букв: без обрезки «р» и «/» рисуются на фоне страницы. */
+  overflow: clip;
 }
 
 .inner {
   width: min(1440px, 100%);
   margin: 0 auto;
-  padding: 56px var(--pad) 24px;
+  padding: 56px var(--pad) calc(24px + 2.5cqi);
   container-type: inline-size;
 }
 
