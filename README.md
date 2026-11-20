@@ -28,6 +28,43 @@ npm run start
 npm run lint
 ```
 
+## Скорость
+
+Оценки ниже сняты [Lighthouse](https://developer.chrome.com/docs/lighthouse/) 13.6 с продакшен-сборки (`npm run build && npm run start`), 20 ноября 2026. PageSpeed Insights использует тот же движок, но запускает его со своих серверов по публичному адресу и, если сайт уже живой, добавляет полевые данные Chrome. Пока домена нет, официальный отчёт PageSpeed снять нельзя. `npm run dev` для замера не подходит: там другие бандлы и нет оптимизаций продакшена.
+
+Повторить локально:
+
+```bash
+npm run build && npm run start
+npx lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-mobile.html
+npx lighthouse http://localhost:3000 --preset=desktop --output=html --output-path=./lighthouse-desktop.html
+```
+
+Зелёная зона категории — от 90. На телефоне включено стандартное замедление Lighthouse, поэтому цифры ниже, чем на десктопе.
+
+### Телефон
+
+![Производительность 91](https://img.shields.io/badge/Performance-91-0cce6b?style=flat-square)
+![Доступность 96](https://img.shields.io/badge/Accessibility-96-0cce6b?style=flat-square)
+![Лучшие практики 100](https://img.shields.io/badge/Best_Practices-100-0cce6b?style=flat-square)
+![SEO 100](https://img.shields.io/badge/SEO-100-0cce6b?style=flat-square)
+
+### Десктоп
+
+![Производительность 99](https://img.shields.io/badge/Performance-99-0cce6b?style=flat-square)
+![Доступность 96](https://img.shields.io/badge/Accessibility-96-0cce6b?style=flat-square)
+![Лучшие практики 100](https://img.shields.io/badge/Best_Practices-100-0cce6b?style=flat-square)
+![SEO 100](https://img.shields.io/badge/SEO-100-0cce6b?style=flat-square)
+
+| | Телефон | Десктоп | Хорошо, если |
+|---|---:|---:|---:|
+| Первая отрисовка | 0,9 с | 0,2 с | до 1,8 с |
+| Крупнейшая отрисовка | 3,5 с | 0,9 с | до 2,5 с |
+| Блокировка потока | 7 мс | 0 мс | до 200 мс |
+| Сдвиг вёрстки | 0 | 0 | до 0,1 |
+
+Крупнейшая отрисовка на телефоне в жёлтой зоне. Остальные виталы и все четыре категории зелёные.
+
 ## Структура
 
 - `src/app` — страницы: главная, политика конфиденциальности, 404
