@@ -168,6 +168,22 @@
   line-height: 1.1;
 }
 
+.again {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.again:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
 @media (max-width: 980px) {
   .inner {
     grid-template-columns: 1fr;

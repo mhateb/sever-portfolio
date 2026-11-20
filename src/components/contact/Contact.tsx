@@ -67,9 +67,17 @@ export function Contact() {
           <div className={styles.success} role="status">
             <p className={styles.successTitle}>Спасибо, {name.trim()}.</p>
             <p>
-              Напишем по номеру {phone.trim()} и пришлём каталог с расчётом
-              {size === "unknown" ? "" : ` для дома ${size} м²`}.
+              {`Напишем по номеру ${phone.trim()} и пришлём каталог с расчётом${
+                size === "unknown" ? "" : ` для дома ${size} м²`
+              }.`}
             </p>
+            <button
+              className={styles.again}
+              type="button"
+              onClick={() => setSent(false)}
+            >
+              Отправить другую заявку
+            </button>
           </div>
         ) : (
           <form className={styles.form} onSubmit={onSubmit} noValidate>
