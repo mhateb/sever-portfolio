@@ -4,6 +4,10 @@
 
 Заявка не уходит на сервер: форма проверяет имя и телефон в браузере и показывает подтверждение.
 
+## Макет
+
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/1LD3PgeyAMLDaZO9od5nzt/Untitled?node-id=4-5&m=dev&embed-host=share" allowfullscreen></iframe>
+
 ## Стек
 
 - [Next.js](https://nextjs.org) 16, App Router
